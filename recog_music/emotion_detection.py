@@ -39,5 +39,3 @@ def detect_emotion(img):
         label = EMOTIONS[preds.argmax()]
 
     return label
-label = detect_emotion("IMG_1207.JPG")
-print("지금 감정은? :", label)

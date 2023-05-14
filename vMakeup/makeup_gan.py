@@ -14,6 +14,12 @@ import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 import numpy as np
 import imageio.v2 as imageio
+import os
+import sys
+parent_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
+sys.path.append(parent_dir)
+import pi_camera
+
 """# Load Models"""
 
 detector = dlib.get_frontal_face_detector()
@@ -59,10 +65,10 @@ def postprocess(img):
 
 """# Load Images"""
 
-img1 = dlib.load_rgb_image('test.jpeg')
+img1 = dlib.load_rgb_image('/mnt/gdrive/mirror_photo.jpg')
 img1_faces = align_faces(img1)
 
-img2 = dlib.load_rgb_image('imgs/makeup/XMY-014.png')
+img2 = dlib.load_rgb_image('/mnt/gdrive/makeup/XMY-014.png')
 img2_faces = align_faces(img2)
 
 fig, axes = plt.subplots(1, 2, figsize=(16, 10))
@@ -94,4 +100,4 @@ axes[1].set_title('Reference')
 axes[1].imshow(ref_img)
 axes[2].set_title('Result')
 axes[2].imshow(output_img)
-imageio.imwrite('result.jpg',output_img)
+imageio.imwrite('/mnt/gdrive/result.jpg',output_img)
