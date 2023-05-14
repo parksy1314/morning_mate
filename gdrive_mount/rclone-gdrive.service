@@ -1,0 +1,29 @@
+[Unit]
+Description=rclone mount for google drive
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+KillMode=none
+RestartSec=5
+ExecStart=/usr/bin/rclone mount gdrive:/ /mnt/gdrive \
+--config /home/morningmate/.config/rclone/rclone.conf \
+--umask 002 \
+--allow-other \
+--allow-non-empty \
+--fast-list \
+--drive-skip-gdocs \
+--poll-interval=1m \
+--buffer-size=32M \
+--vfs-read-chunk-size=32M \
+--vfs-read-chunk-size-limit 2048M \
+--vfs-cache-mode writes \
+--dir-cache-time=1m
+ExecStop=/usr/bin/fusermount -uz /mnt/gdrive
+Restart=on-failure
+User=morningmate
+Group=morningmate
+
+[Install]
+WantedBy=multi-user.target
